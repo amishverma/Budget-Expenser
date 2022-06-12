@@ -11,10 +11,22 @@ function Expenses(props) {
     console.log("expense.js");
     setFilteredYear(selectedYear);
   };
+
+
+  const filteredExpenses=props.items.filter((expense)=>{
+    return expense.date.getFullYear().toString()===filteredYear;
+  })
   return (
     <div>
       <Card className="expenses">
-        {props.items.map((expense)=><ExpenseItem title={expense.title} amount={expense.amount} date={expense.date}></ExpenseItem> )}
+        
+        <ExpensesFilter
+          selected={filteredYear}
+          onChangeFilter={filterChangeHandler}
+        ></ExpensesFilter>
+        {/* {props.items.map((expense)=><ExpenseItem  title={expense.title} amount={expense.amount} date={expense.date} key={expense.id}></ExpenseItem> )} */}
+
+        {filteredExpenses.map((expense)=><ExpenseItem  title={expense.title} amount={expense.amount} date={expense.date} key={expense.id}></ExpenseItem> )}
       </Card>
     </div>
   );
